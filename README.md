@@ -6,6 +6,7 @@ A plugin for [Hearthstone Deck Tracker](https://hsdecktracker.net/) that keeps t
 
 ## Using the Plugin
 - Install [Hearthstone Deck Tracker](https://hsdecktracker.net/)
+- Download [Trouble at the Mill](https://github.com/realchriscasey/TroubleAtTheMill/releases) from GitHub
 - Copy the file TroubleAtTheMill.dll into your Hearthstone Deck Tracker's Plugins folder (try %APPDATA%\HearthstoneDeckTracker\Plugins)
 - [Re]start Hearthstone Deck Tracker
 - Click Options -> Plugins -> Trouble at the Mill
