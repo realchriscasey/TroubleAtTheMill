@@ -7,8 +7,8 @@
     <ProjectGuid>{1AF92916-703E-4734-9A93-9757E9F6A42F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>hdt_fatigue</RootNamespace>
-    <AssemblyName>hdt_fatigue</AssemblyName>
+    <RootNamespace>TroubleAtTheMill</RootNamespace>
+    <AssemblyName>TroubleAtTheMill</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
