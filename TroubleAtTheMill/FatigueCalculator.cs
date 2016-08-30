@@ -5,6 +5,8 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 using CoreAPI = Hearthstone_Deck_Tracker.API.Core;
+using Hearthstone_Deck_Tracker;
+using System.Windows;
 
 namespace TroubleAtTheMill
 {
@@ -45,6 +47,26 @@ namespace TroubleAtTheMill
                 return;
             }
 
+            var pos = User32.GetMousePos();
+            System.Windows.Point relativeCanvas;
+            try
+            {
+                relativeCanvas = CoreAPI.OverlayCanvas.PointFromScreen(new System.Windows.Point(pos.X, pos.Y));
+            }
+            catch (InvalidOperationException)
+            {
+                return;
+            }
+
+            if (isMouseHoveringDecks(relativeCanvas))
+            {
+                fatigueDisplay.Show();
+            } else
+            {
+                fatigueDisplay.Hide();
+            }
+
+
             int playerHealth = this.hero.Health + this.hero.GetTag(HearthDb.Enums.GameTag.ARMOR);
             if (playerHealth <= 0)
             {
@@ -61,6 +83,20 @@ namespace TroubleAtTheMill
 
             fatigueDisplay.UpdateText(drawsLeft + " draws remaining");
             fatigueDisplay.UpdateDetail(getDetailText(drawsLeft - playerCardsRemaining, playerFatigue, playerHealth));
+        }
+
+        private bool isMouseHoveringDecks(Point relativeCanvas)
+        {
+            double y_min = CoreAPI.OverlayCanvas.Height / 2 - 300;
+            double y_max = CoreAPI.OverlayCanvas.Height / 2 + 200;
+
+            double x_min = CoreAPI.OverlayCanvas.Width - 300;
+            double x_max = CoreAPI.OverlayCanvas.Width - 200;
+
+            return (relativeCanvas.Y > y_min &&
+                relativeCanvas.Y < y_max &&
+                relativeCanvas.X > x_min &&
+                relativeCanvas.X < x_max);
         }
 
         private String getDetailText(int draws, int fatigue, int health)

@@ -15,7 +15,7 @@ namespace TroubleAtTheMill
 
         public string ButtonText => "DO NOT PUSH THIS BUTTON!";
         public string Author => "realchriscasey";
-        public Version Version => new Version(0, 1, 2);
+        public Version Version => new Version(0, 9, 0);
         public System.Windows.Controls.MenuItem MenuItem => null;        
 
         private List<UIElement> _displayElements;
