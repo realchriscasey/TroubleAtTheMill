@@ -33,6 +33,7 @@ namespace TroubleAtTheMill
         private double ScreenRatio => (4.0 / 3.0) / (Core.OverlayCanvas.Width / Core.OverlayCanvas.Height);
         public void UpdatePosition()
         {
+            /* OLD CODE; positions near top of screen
             Canvas.SetTop(this, Core.OverlayCanvas.Height * 3 / 100);
             var xPos = Hearthstone_Deck_Tracker.Helper.GetScaledXPos(8.0 / 100, (int)Core.OverlayCanvas.Width, ScreenRatio);
 
@@ -43,6 +44,15 @@ namespace TroubleAtTheMill
             else
             {
                 Canvas.SetLeft(this, xPos);
+            }
+            */
+
+            Canvas.SetRight(this, Hearthstone_Deck_Tracker.Helper.GetScaledXPos(5.0 / 100, (int)Core.OverlayCanvas.Width, ScreenRatio));
+            if (isLocal)
+            {
+                Canvas.SetTop(this, Core.OverlayCanvas.Height * 65 / 100);
+            } else {
+                Canvas.SetBottom(this, Core.OverlayCanvas.Height * 75 / 100);
             }
         }
 
