@@ -17,6 +17,7 @@ namespace TroubleAtTheMill
 
             InitializeComponent();
             UpdatePosition();
+            Hide();
         }
 
         public void UpdateText(String text)

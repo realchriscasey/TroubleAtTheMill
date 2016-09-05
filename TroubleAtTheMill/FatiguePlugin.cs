@@ -15,7 +15,7 @@ namespace TroubleAtTheMill
 
         public string ButtonText => "DO NOT PUSH THIS BUTTON!";
         public string Author => "realchriscasey";
-        public Version Version => new Version(0, 9, 0);
+        public Version Version => new Version(1, 0, 0);
         public System.Windows.Controls.MenuItem MenuItem => null;        
 
         private List<UIElement> _displayElements;
@@ -45,7 +45,7 @@ namespace TroubleAtTheMill
             _calculators.Add(fatigueCalculator);
 
             GameEvents.OnGameStart.Add(fatigueCalculator.GameStart);
-            GameEvents.OnInMenu.Add(fatigueCalculator.InMenu);            
+            GameEvents.OnInMenu.Add(fatigueCalculator.InMenu);
         }
 
         void IPlugin.OnUnload()
@@ -58,7 +58,6 @@ namespace TroubleAtTheMill
             _calculators.Clear(); //this probably memory leaks. not sure how to clean up the calculators from the notifications
         }
 
-        //my apologies, I kept digging through and finding more places I needed to subscribe to an event.
         //I wish there was an easy way to hook '# of cards in deck' and 'health' changes directly.
         void IPlugin.OnUpdate()
         {
