@@ -13,4 +13,4 @@ A plugin for [Hearthstone Deck Tracker](https://hsdecktracker.net/) that keeps t
 - Toggle the switch to Enabled
 
 ## Known Issues
-- Inaccurate draw counts sometimes appear while not in a match
+- None at this time
