@@ -49,10 +49,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HearthDb">
-      <HintPath>..\..\..\..\..\Desktop\Hearthstone Deck Tracker\HearthDb.dll</HintPath>
+      <HintPath>..\..\..\Users\bozu\Desktop\Hearthstone Deck Tracker\HearthDb.dll</HintPath>
     </Reference>
     <Reference Include="Hearthstone Deck Tracker">
-      <HintPath>..\..\..\..\..\Desktop\Hearthstone Deck Tracker\Hearthstone Deck Tracker.exe</HintPath>
+      <HintPath>..\..\..\Users\bozu\Desktop\Hearthstone Deck Tracker\Hearthstone Deck Tracker.exe</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

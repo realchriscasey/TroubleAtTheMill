@@ -42,37 +42,19 @@ namespace TroubleAtTheMill
 
         private void updateFatigue()
         {
-            if (this.player == null || this.hero == null)
-            {
-                return;
-            }
-
-            var pos = User32.GetMousePos();
-            System.Windows.Point relativeCanvas;
-            try
-            {
-                relativeCanvas = CoreAPI.OverlayCanvas.PointFromScreen(new System.Windows.Point(pos.X, pos.Y));
-            }
-            catch (InvalidOperationException)
-            {
-                return;
-            }
-
-            if (isMouseHoveringDecks(relativeCanvas))
-            {
-                fatigueDisplay.Show();
-            } else
+            if (this.player == null || this.hero == null || !isMouseHoveringDecks())
             {
                 fatigueDisplay.Hide();
-            }
-
+                return;
+            }            
 
             int playerHealth = this.hero.Health + this.hero.GetTag(HearthDb.Enums.GameTag.ARMOR);
             if (playerHealth <= 0)
             {
-                fatigueDisplay.UpdateText("ded");
+                fatigueDisplay.UpdateText("dead");
                 fatigueDisplay.UpdateDetail(playerHealth.ToString());
 
+                fatigueDisplay.Show();
                 return;
             }
 
@@ -83,20 +65,57 @@ namespace TroubleAtTheMill
 
             fatigueDisplay.UpdateText(drawsLeft + " draws remaining");
             fatigueDisplay.UpdateDetail(getDetailText(drawsLeft - playerCardsRemaining, playerFatigue, playerHealth));
+
+            fatigueDisplay.Show();
         }
 
-        private bool isMouseHoveringDecks(Point relativeCanvas)
+
+        /* coordinate system */
+        /* center of board is (0,0). top of board is (0,100). left of board is (-133,0). */
+        /* precise to approximately three digits */
+
+        private bool isMouseHoveringDecks()
         {
-            double y_min = CoreAPI.OverlayCanvas.Height / 2 - 300;
-            double y_max = CoreAPI.OverlayCanvas.Height / 2 + 200;
+            Point mouse = getMousePos();
 
-            double x_min = CoreAPI.OverlayCanvas.Width - 300;
-            double x_max = CoreAPI.OverlayCanvas.Width - 200;
+            if (mouse.X > 112.2 && mouse.X < 131.5 && 
+                mouse.Y > 13.74 && mouse.Y < 43.74)
+            {
+                //mouse is hovering the opponent deck
+                return true;
+            }
 
-            return (relativeCanvas.Y > y_min &&
-                relativeCanvas.Y < y_max &&
-                relativeCanvas.X > x_min &&
-                relativeCanvas.X < x_max);
+            if (mouse.X > 110.5 && mouse.X < 132.9 &&
+                mouse.Y > -39.9 && mouse.Y < -10.3)
+            {
+                // mouse is hovering the player's deck
+                return true;
+            }
+
+            return false;
+        }
+
+        private static double GLOBAL_SCALE = 100.0;
+        private static double EMPIRICAL_X_OFFSET = 0;
+        private static double EMPIRICAL_Y_OFFSET = -0.07 * GLOBAL_SCALE;
+
+        private Point getMousePos()
+        {
+            System.Drawing.Point pos = User32.GetMousePos();
+            System.Drawing.Rectangle gameBoard = User32.GetHearthstoneRect(false);
+
+            double yCenter = gameBoard.Height / 2;
+            double xCenter = gameBoard.Width / 2;
+            double scale = GLOBAL_SCALE / yCenter;
+
+            double xOffset = EMPIRICAL_X_OFFSET;
+            double yOffset = EMPIRICAL_Y_OFFSET;
+
+            Point local = new Point(
+                (pos.X - xCenter) * scale + xOffset,
+                (pos.Y - yCenter) * scale * -1 + yOffset);  //invert y axis (up should be positive, dammit)
+
+            return local;
         }
 
         private String getDetailText(int draws, int fatigue, int health)
